@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Arda Danışmanlık - İş Takip Paneli</title>
+  <link rel="stylesheet" href="/static/styles.css"/>
+  <link rel="stylesheet" href="/static/theme.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <div class="brand-title">İŞ TAKİP PANELİ</div>
+          <div class="brand-sub"></div>
+        </div>
+      </div>
+      <nav class="nav">
+        <button class="nav-item active" data-page="dashboard">Ana Sayfa</button>
+        <button class="nav-item" data-page="calisma">Çalışma İzni</button>
+        <button class="nav-item" data-page="ikamet">İkamet İzni</button>
+        <button class="nav-item" data-page="sgk">SGK</button>
+        <button class="nav-item" data-page="eimza">E-İmza</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="footer-actions">
+          <button class="ghost" id="btnBackupExport">Yedekle (JSON)</button>
+          <label class="ghost filelike">Yedek Yükle<input type="file" id="backupImportFile" accept=".json"/></label>
+        </div>
+        
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="page-title" id="pageTitle">ANA SAYFA</div>
+        <div class="topbar-right">
+          <button class="btn primary" id="btnNew">+ Yeni Kayıt</button>
+          <label class="btn" id="btnImportLabel">XLS İçe Aktar<input type="file" id="importFile" accept=".xlsx,.xls" /></label>
+          <button class="btn" id="btnExport">XLS Dışa Aktar</button>
+        </div>
+      </header>
+
+      <section class="page" id="page-dashboard">
+        <div class="cards" id="dashCards"></div>
+
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-title">
+              <span>Takvim</span>
+              <div class="cal-tools">
+                <button class="icon" id="calPrev" title="Önceki">‹</button>
+                <button class="icon" id="calToday" title="Bugün">Bugün</button>
+                <button class="icon" id="calNext" title="Sonraki">›</button>
+              </div>
+            </div>
+            <div class="calendar" id="calendar"></div>
+            <div class="legend" id="legend"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">
+              <span>Yaklaşan Hatırlatıcılar</span>
+              <span class="small muted">Tarih’e göre sıralı</span>
+            </div>
+            <div id="reminders" class="reminders"></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">
+            <span>Son Başvurular</span>
+            <span class="small muted">Çalışma + İkamet (son 20)</span>
+          </div>
+          <div class="table-wrap">
+            <table class="table" id="recentTable">
+              <thead>
+                <tr><th>Tip</th><th>Tarih</th><th>Firma / No</th><th>İsim</th><th>Ülke</th><th>Durum</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="page hidden" id="page-list">
+        <div class="toolbar">
+          <div class="search"><input id="searchInput" placeholder="Ara: Firma, İsim, Kimlik No, Ülke..."/></div>
+          <div class="filters" id="statusFilters"></div>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="dataTable">
+            <thead id="dataHead"></thead>
+            <tbody id="dataBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal hidden" id="modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-title" id="modalTitle">Yeni Kayıt</div>
+        <button class="icon" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions">
+        <button class="btn" id="modalCancel">Vazgeç</button>
+        <button class="btn primary" id="modalSave">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="reminderModal">
+    <div class="modal-card" style="width: min(400px, 90vw);">
+      <div class="modal-head">
+        <div class="modal-title">Hatırlatıcı Ekle</div>
+        <button class="icon" id="reminderClose">✕</button>
+      </div>
+      <div class="modal-body" style="grid-template-columns: 1fr;">
+        <div class="field"><label>Tarih</label><input type="date" id="rem_tarih"></div>
+        <div class="field"><label>Başlık</label><input id="rem_baslik" placeholder="Örn: X Firması SGK Onayı"></div>
+        <div class="field"><label>Açıklama</label><textarea id="rem_aciklama"></textarea></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" id="reminderCancel">Vazgeç</button>
+        <button class="btn primary" id="reminderSave">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
